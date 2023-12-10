@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "volar:gen": "vue-tsc --noEmit --skipLibCheck --types tools/volar.d.ts --entry-point tools/volarMain.ts",
+    "volar:ts": "vue-tsc --noEmit --skipLibCheck --watch"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
