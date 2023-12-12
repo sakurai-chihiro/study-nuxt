@@ -1,7 +1,7 @@
 <template>
-  <div class="header">
+  <header class="header">
     <h1>ヘッダータイトル</h1>
-  </div>
+  </header>
 </template>
 
 <style>
