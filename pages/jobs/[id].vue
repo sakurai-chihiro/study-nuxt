@@ -4,12 +4,22 @@
 
   <p>あなたの名前は<span class="u-tx-bold">{{ person.name }}</span></p>
   
-  <!-- 条件付きでプロフィールを表示する部分 -->
   <button type="button" @click="showProfile">プロフィールを表示</button>
-  <!-- isShowProfileがtrueなら情報が表示される -->
+
   <p v-if="isShowProfile">id: {{ person.id }}</p>
   <p v-if="isShowProfile">name: {{ person.name }}</p>
   <p v-if="isShowProfile">age: {{ person.age }}</p>
+
+  <!-- v-forディレクティブを使って求人情報を繰り返し表示する -->
+  <ul>
+    <li v-for="job in jobs" :key="job.id">
+      <p :class="{ active:job.id == 2, active2:job.id == 3 }">
+        求人ID: {{ job.id }}
+      </p>
+      <p>求人タイトル: {{ job.name }}</p>
+      <p>求人内容: {{ job.content }}</p>
+    </li>
+  </ul>
 </template>
 
 <script language="ts">
@@ -21,8 +31,29 @@ export default {
     const name = ref('')
     const nameWithSan = ref('')
 
-    // refを使ってisShowProfileという変数を作成
     const isShowProfile = ref(false)
+
+    // 空の配列を初期値とするリアクティブ変数 jobs を作成
+    const jobs = ref([])
+    // jobsのvalueプロパティに、求人情報のオブジェクトを要素とする配列を代入
+    jobs.value = [
+      { id: 1,
+        title: '求人1',
+        content: '求人1の仕事内容です。'
+      },
+      { id: 2,
+        title: '求人2',
+        content: '求人2の仕事内容です。'
+      },
+      { id: 3,
+        title: '求人3',
+        content: '求人3の仕事内容です。'
+      },
+      { id: 4,
+        title: '求人4',
+        content: '求人4の仕事内容です。'
+      },
+    ];
 
     const person = reactive ({
       id: 1,
@@ -34,8 +65,6 @@ export default {
       nameWithSan.value = name.value + 'さん'
     };
 
-    // プロフィールを表示するボタンがクリックされると呼び出される
-    // ボタンがクリックされるたびに表示非表示が切り替わる
     const showProfile = () => {
       isShowProfile.value = !isShowProfile.value
     }
@@ -45,6 +74,7 @@ export default {
       nameWithSan,
       person,
       isShowProfile,
+      jobs,
       addSan,
       showProfile,
     }
