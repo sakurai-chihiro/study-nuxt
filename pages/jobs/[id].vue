@@ -1,25 +1,47 @@
 <template>
-  <input type="text" name="name" v-model="name">
-  <p>あなたの名前は{{ name }}</p>
+  <!-- テキスト入力とボタン -->
+<input type="text" name="name" v-model="person.name">
+<button type="button" @click="addSan">登録</button>
+
+<!-- 名前を表示する部分 -->
+<p>あなたの名前は<span class="u-tx-bold">{{ person.name }}</span></p>
 </template>
 
-<script>
-// nuxt3から導入されたref関数をvueのモジュールからimportしている
-// [ref関数]_リアクティブ(状態管理)の値を定義するための関数
-// https://field.asia/%E7%A5%9E%E5%9B%9Evue3-js-nuxt3-typescript%E3%81%A9%E3%81%86%E3%82%84%E3%82%8B%EF%BC%9F%E3%80%90%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E8%A7%A3%E8%AA%AC%E3%80%91/
+<script language="ts">
 
-import {ref} from 'vue'
+import {ref,reactive} from 'vue'
 
+// refとreactiveを使用して変数を定義している
 export default {
-  setup() {
-    const name = ref("");
+setup() {
+  // テキスト入力の値を保持する変数
+  const name = ref('')
+  // 'さん'がついた名前を保持する変数
+  const nameWithSan = ref('')
+  // オブジェクト形式でデータを保持する変数
+  const person = reactive ({
+    id: 1,
+    name: 'sato',
+    age: 20
+  });
+  // 'さん'を付けて名前を更新する関数
+  const addSan = () => {
+    nameWithSan.value = name.value + 'さん'
+  };
 
-    return {
-      name
-    }
+  // コンポーネントに返すデータ
+  return {
+    name,
+    nameWithSan,
+    person,
+    addSan
   }
+}
 }
 </script>
 
 <style>
+.u-tx-bold {
+font-weight: bold;
+}
 </style>
