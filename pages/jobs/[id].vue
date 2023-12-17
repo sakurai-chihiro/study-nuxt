@@ -1,47 +1,59 @@
 <template>
-  <!-- テキスト入力とボタン -->
-<input type="text" name="name" v-model="person.name">
-<button type="button" @click="addSan">登録</button>
+  <input type="text" name="name" v-model="person.name">
+  <button type="button" @click="addSan">登録</button>
 
-<!-- 名前を表示する部分 -->
-<p>あなたの名前は<span class="u-tx-bold">{{ person.name }}</span></p>
+  <p>あなたの名前は<span class="u-tx-bold">{{ person.name }}</span></p>
+  
+  <!-- 条件付きでプロフィールを表示する部分 -->
+  <button type="button" @click="showProfile">プロフィールを表示</button>
+  <!-- isShowProfileがtrueなら情報が表示される -->
+  <p v-if="isShowProfile">id: {{ person.id }}</p>
+  <p v-if="isShowProfile">name: {{ person.name }}</p>
+  <p v-if="isShowProfile">age: {{ person.age }}</p>
 </template>
 
 <script language="ts">
 
-import {ref,reactive} from 'vue'
+import { ref , reactive } from 'vue'
 
-// refとreactiveを使用して変数を定義している
 export default {
-setup() {
-  // テキスト入力の値を保持する変数
-  const name = ref('')
-  // 'さん'がついた名前を保持する変数
-  const nameWithSan = ref('')
-  // オブジェクト形式でデータを保持する変数
-  const person = reactive ({
-    id: 1,
-    name: 'sato',
-    age: 20
-  });
-  // 'さん'を付けて名前を更新する関数
-  const addSan = () => {
-    nameWithSan.value = name.value + 'さん'
-  };
+  setup() {
+    const name = ref('')
+    const nameWithSan = ref('')
 
-  // コンポーネントに返すデータ
-  return {
-    name,
-    nameWithSan,
-    person,
-    addSan
+    // refを使ってisShowProfileという変数を作成
+    const isShowProfile = ref(false)
+
+    const person = reactive ({
+      id: 1,
+      name: 'sato',
+      age: 20
+    });
+
+    const addSan = () => {
+      nameWithSan.value = name.value + 'さん'
+    };
+
+    // プロフィールを表示するボタンがクリックされると呼び出される
+    // ボタンがクリックされるたびに表示非表示が切り替わる
+    const showProfile = () => {
+      isShowProfile.value = !isShowProfile.value
+    }
+
+    return {
+      name,
+      nameWithSan,
+      person,
+      isShowProfile,
+      addSan,
+      showProfile,
+    }
   }
-}
 }
 </script>
 
 <style>
 .u-tx-bold {
-font-weight: bold;
+  font-weight: bold;
 }
 </style>
