@@ -13,9 +13,17 @@
 <script lang="ts">
 import { ref,reactive } from 'vue'
 
+type Job = {
+  id: number,
+  title: string,
+  description: string,
+  cover: string,
+  createdAt: string,
+}
+
 export default {
   async setup() {
-    const { data: jobs } = await useFetch(`https://62fe320941165d66bfbabe7e.mockapi.io/apt/v1/jobs`)
+    const { data: jobs } = await useFetch<Job[]>(`https://62fe320941165d66bfbabe7e.mockapi.io/apt/v1/jobs`)
     return {
       jobs,
     }
